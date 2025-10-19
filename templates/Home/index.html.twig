@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+{% block title %}TaskFlow - Manage Your Tasks Efficiently{% endblock %}
+
+{% block body %}
+
+    {# HERO SECTION #}
+    <section class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-20 md:py-32">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 mb-6">
+                    Manage your tasks
+                    <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">                    efficiently</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-600 mb-10">
+                    Organize, prioritize, and accomplish your goals with our intuitive task management platform
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#" class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl w-full sm:w-auto text-center">
+                        <i class="fas fa-rocket mr-2"></i> Start Now
+                    </a>
+                    <a href="#" class="bg-white hover:bg-gray-50 text-gray-700 px-8 py-4 rounded-xl font-semibold text-lg shadow-lg border-2 border-gray-200 w-full sm:w-auto text-center">
+                        <i class="fas fa-play-circle mr-2"></i> See the Demo
+                    </a>
+                </div>
+
+                <div class="mt-16">
+                    <div class="bg-white rounded-2xl shadow-2xl p-8">
+                        <div class="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-laptop-code text-blue-600 text-8xl opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# FEATURES SECTION #}
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Powerful Features</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Everything you need to stay organized and productive</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                {# Feature 1 #}
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 hover:shadow-xl transition">
+                    <div class="bg-blue-600 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-pen-to-square text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Quick Task Creation</h3>
+                    <p class="text-gray-700">Create and organize tasks in seconds with our intuitive interface.</p>
+                </div>
+
+                {# Feature 2 #}
+                <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 hover:shadow-xl transition">
+                    <div class="bg-purple-600 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-tags text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Categorization & Priorities</h3>
+                    <p class="text-gray-700">Organize tasks with custom categories and priority levels.</p>
+                </div>
+
+                {# Feature 3 #}
+                <div class="bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl p-8 hover:shadow-xl transition">
+                    <div class="bg-pink-600 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-pie text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Visual Dashboards</h3>
+                    <p class="text-gray-700">Track your progress with beautiful charts and analytics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# STATISTICS SECTION #}
+    <section class="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Join Thousands of Productive Users</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                {# Stat 1 #}
+                <div class="text-center">
+                    <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8">
+                        <i class="fas fa-clipboard-list text-white text-5xl mb-4"></i>
+                        <div class="counter text-5xl font-bold text-white mb-2" data-target=" stats.tasksCreated|default(15420) ">0</div>
+                        <p class="text-xl text-white/90 font-medium">Tasks Created</p>
+                    </div>
+                </div>
+
+                {# Stat 2 #}
+                <div class="text-center">
+                    <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8">
+                        <i class="fas fa-check-circle text-white text-5xl mb-4"></i>
+                        <div class="counter text-5xl font-bold text-white mb-2" data-target=" stats.tasksCompleted|default(12856) ">0</div>
+                        <p class="text-xl text-white/90 font-medium">Tasks Completed</p>
+                    </div>
+                </div>
+
+                {# Stat 3 #}
+                <div class="text-center">
+                    <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8">
+                        <i class="fas fa-users text-white text-5xl mb-4"></i>
+                        <div class="counter text-5xl font-bold text-white mb-2" data-target=" stats.activeUsers|default(3240) ">0</div>
+                        <p class="text-xl text-white/90 font-medium">Active Users</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# FINAL CTA SECTION #}
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Ready to boost your productivity?</h2>
+            <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">Join TaskFlow today and experience the future of task management</p>
+            <a href="#" class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-10 py-4 rounded-xl font-semibold text-lg shadow-xl">
+                <i class="fas fa-rocket mr-2"></i> Get Started Free
+            </a>
+        </div>
+    </section>
+
+{% endblock %}
