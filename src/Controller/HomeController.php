@@ -21,5 +21,11 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'stats' => $stats,
         ]);
+
+    }
+    #[Route('/request-account', name: 'request_account')]
+    public function requestAccount(): Response
+    {
+        return $this->render('home/request_account.html.twig');
     }
 }

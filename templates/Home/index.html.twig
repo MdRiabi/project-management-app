@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}TaskFlow - Manage Your Tasks Efficiently{% endblock %}
+{% block title %}TekUpFlow - Manage Your Tasks Efficiently{% endblock %}
 
 {% block body %}
 
@@ -16,8 +16,8 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a href="#" class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl w-full sm:w-auto text-center">
-                        <i class="fas fa-rocket mr-2"></i> Start Now
+                    <a href="{{ path('request_account') }}" class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl w-full sm:w-auto text-center">
+                        <i class="fas fa-rocket mr-2"></i> Request an Account
                     </a>
                     <a href="#" class="bg-white hover:bg-gray-50 text-gray-700 px-8 py-4 rounded-xl font-semibold text-lg shadow-lg border-2 border-gray-200 w-full sm:w-auto text-center">
                         <i class="fas fa-play-circle mr-2"></i> See the Demo
@@ -117,7 +117,7 @@
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Ready to boost your productivity?</h2>
             <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">Join TaskFlow today and experience the future of task management</p>
-            <a href="#" class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-10 py-4 rounded-xl font-semibold text-lg shadow-xl">
+            <a href="{{ path('request_account') }}" class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-10 py-4 rounded-xl font-semibold text-lg shadow-xl">
                 <i class="fas fa-rocket mr-2"></i> Get Started Free
             </a>
         </div>
