@@ -1,17 +1,146 @@
 <!DOCTYPE html>
-<html lang="eng">
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TaskFlow{% endblock %}</title>
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    {# Tailwind CSS #}
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    {# Font Awesome Icons #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    {# Google Fonts #}
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+{# HEADER #}
+<header class="bg-white shadow-sm sticky top-0 z-50">
+    <nav class="container mx-auto px-4 py-4">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-2">
+                    <i class="fas fa-tasks text-white text-xl"></i>
+                </div>
+                <span class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">                        TaskFlow</span>
+            </div>
+
+            <div class="hidden md:flex items-center space-x-8">
+                <a href=" {{ path('home') }} " class="text-gray-700 hover:text-blue-600 font-medium">
+                    <i class="fas fa-home mr-1"></i> Home
+                </a>
+                <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">
+                    <i class="fas fa-chart-line mr-1"></i> Dashboard
+                </a>
+                <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">
+                    <i class="fas fa-list-check mr-1"></i> My Tasks
+                </a>
+            </div>
+
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">Login</a>
+                <a href="#" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-medium">
+                    Sign Up
+                </a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+{# PAGE CONTENT #}
+{% block body %}{% endblock %}
+
+{# FOOTER #}
+<footer class="bg-gray-900 text-gray-300 py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+                <div class="flex items-center space-x-2 mb-4">
+                    <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-2">
+                        <i class="fas fa-tasks text-white text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold text-white">TaskFlow</span>
+                </div>
+                <p class="text-gray-400 mb-4">Manage your tasks efficiently</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-blue-500"><i class="fab fa-facebook text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-twitter text-2xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-pink-500"><i class="fab fa-instagram text-2xl"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-white font-semibold text-lg mb-4">Product</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-white">Features</a></li>
+                    <li><a href="#" class="hover:text-white">Pricing</a></li>
+                    <li><a href="#" class="hover:text-white">Demo</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-white font-semibold text-lg mb-4">Company</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-white">About Us</a></li>
+                    <li><a href="#" class="hover:text-white">Blog</a></li>
+                    <li><a href="#" class="hover:text-white">Contact</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-white font-semibold text-lg mb-4">Support</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-white">Help Center</a></li>
+                    <li><a href="#" class="hover:text-white">Documentation</a></li>
+                    <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-800 pt-8 text-center">
+            <p class="text-gray-400">©  'now'|date('Y')  TaskFlow. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+{% block javascripts %}
+    <script>
+        // Counter animation
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target.toLocaleString();
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(start).toLocaleString();
+                }
+            }, 16);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const counters = document.querySelectorAll('.counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.dataset.animated) {
+                        const target = parseInt(entry.target.dataset.target);
+                        animateCounter(entry.target, target);
+                        entry.target.dataset.animated = 'true';
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(counter => observer.observe(counter));
+        });
+    </script>
+{% endblock %}
+</body>
 </html>
