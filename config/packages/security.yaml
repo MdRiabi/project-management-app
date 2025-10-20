@@ -1,7 +1,7 @@
 security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: "auto"
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         # used to reload user from session & other features (e.g. switch_user)
@@ -16,6 +16,16 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                username_parameter: email # Indique au firewall d'utiliser 'email' au lieu de '_username'
+                password_parameter: password # Indique au firewall d'utiliser 'password' au lieu de '_password'
+                # CLÉ DE LA REDIRECTION :
+                # 'app_dashboard' est le nom de la route définie dans DashboardController.php
+                default_target_path: app_post_login_redirect
+                always_use_default_target_path: true
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard Global | Admin{% endblock %}
+
+{% block header %}
+    {# Inclure une navbar ADMIN ici, avec des liens vers Gérer Utilisateurs, Rapports, etc. #}
+    {% include 'components/_navbar.html.twig' %} 
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Dashboard Global (Bienvenue, {{ user.firstName }})</h1>
+        <p class="lead text-danger">Accès Administrateur : Vue d'ensemble des KPIs et des risques critiques.</p>
+        
+        <div class="row">
+            {# Bloc 1 : KPIs de Performance #}
+            <div class="col-md-4">
+                <div class="card bg-success text-white">... Taux de Livraison à l'Heure (OTD) ...</div>
+            </div>
+            {# Bloc 2 : Alerte Risques #}
+            <div class="col-md-4">
+                <div class="card bg-warning">... Risques Élevés non Assignés ...</div>
+            </div>
+            {# Bloc 3 : Capacité #}
+            <div class="col-md-4">
+                <div class="card">... Surcharge des Ressources ...</div>
+            </div>
+        </div>
+        
+        {# Tableau des Projets en Cours #}
+        <h2 class="mt-5">Portefeuille de Projets</h2>
+        {# ... Table des Projets... #}
+        
+    </div>
+{% endblock %}
