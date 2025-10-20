@@ -4,7 +4,7 @@
 
 namespace App\DataFixtures;
 
-use Entity\User\User; // Assurez-vous que le namespace correspond à votre classe User !
+use App\Entity\User; // Assurez-vous que le namespace correspond à votre classe User !
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;

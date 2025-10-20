@@ -2,7 +2,7 @@
 
 // src/User/User.php
 
-namespace Entity\User; // IMPORTANT : Adaptez ce namespace à votre structure !
+namespace App\Entity; // IMPORTANT : Adaptez ce namespace à votre structure !
 
 use App\Repository\UserRepository; // Assurez-vous que le Repository est dans le bon dossier !
 use Doctrine\ORM\Mapping as ORM;

@@ -8,6 +8,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AccountController extends AbstractController
 {
+    #[Route('/login', name: 'login', methods: ['GET'])]
+    public function login(): Response
+    {
+        return $this->render('home/login.html.twig');
+    }
+
     #[Route('/request-account', name: 'request_account', methods: ['GET'])]
     public function requestAccount(): Response
     {

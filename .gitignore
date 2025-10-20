@@ -1,8 +1,13 @@
 
+
+/.idea/
+*.iml
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
 /.env.*.local
+/config/secrets/
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
