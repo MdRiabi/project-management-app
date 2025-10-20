@@ -1,0 +1,47 @@
+{# templates/components/_topbar_admin.html.twig #}
+
+{# Header/Topbar - L'élément prend tout l'espace horizontal au-dessus du contenu #}
+<header class="h-16 bg-white dark:bg-gray-800 shadow-md lg:ml-64 z-10 sticky top-0">
+    <div class="flex items-center justify-between h-full px-6">
+        
+        {# Bouton de Menu (Pour les écrans mobiles) #}
+        <button class="lg:hidden text-gray-600 dark:text-gray-300">
+            <i class="fas fa-bars text-xl"></i>
+        </button>
+
+        {# Barre de Recherche (Utilisation de Tailwind pour le style de l'image) #}
+        <div class="hidden md:block flex-1 max-w-lg mx-4">
+            <div class="relative">
+                <input
+                    type="search"
+                    placeholder="Search for Results..."
+                    class="w-full pl-10 pr-4 py-2 rounded-lg border-2 border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200 focus:outline-none focus:border-blue-500"
+                >
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+        </div>
+
+        {# Icônes de Profil et de Notifications #}
+        <div class="flex items-center space-x-4">
+            
+            {# Icônes d'Action Rapide #}
+            <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-blue-500 transition">
+                <i class="fas fa-bell text-lg"></i>
+                <span class="absolute top-2 right-12 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">5</span>
+            </button>
+            <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-blue-500 transition">
+                <i class="fas fa-moon text-lg"></i> {# Mode Sombre/Clair #}
+            </button>
+
+            {# Profil Utilisateur #}
+            <div class="flex items-center space-x-3 cursor-pointer">
+                <img src="/assets/images/mr_jack.jpg" alt="Mr. Jack Avatar" class="h-8 w-8 rounded-full border-2 border-white">
+                <span class="text-sm font-medium text-gray-800 dark:text-white">{{ app.user.firstName }} {{ app.user.lastName }}</span>
+                <a href="{{ path('app_logout') }}" class="text-gray-500 dark:text-gray-400 hover:text-red-500">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
+            
+        </div>
+    </div>
+</header>

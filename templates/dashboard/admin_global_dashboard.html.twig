@@ -1,35 +1,147 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Dashboard Global | Admin{% endblock %}
+{# Assurez-vous que le body utilise une classe dark:bg-gray-900 si vous utilisez un mode sombre #}
+{% block body_attributes %}class="bg-gray-100 dark:bg-gray-900"{% endblock %}
 
-{% block header %}
-    {# Inclure une navbar ADMIN ici, avec des liens vers Gérer Utilisateurs, Rapports, etc. #}
-    {% include 'components/_navbar.html.twig' %} 
-{% endblock %}
+{% block title %}Dashboard | Global Project Analysis{% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
-        <h1 class="mb-4">Dashboard Global (Bienvenue, {{ user.firstName }})</h1>
-        <p class="lead text-danger">Accès Administrateur : Vue d'ensemble des KPIs et des risques critiques.</p>
+
+    {# ---------------------------------------------------- #}
+    {# SIDEBAR (MENU LATÉRAL) #}
+    {# ---------------------------------------------------- #}
+    {% include 'components/_sidebar_admin.html.twig' %} 
+
+    <div class="lg:pl-64 flex flex-col">
         
-        <div class="row">
-            {# Bloc 1 : KPIs de Performance #}
-            <div class="col-md-4">
-                <div class="card bg-success text-white">... Taux de Livraison à l'Heure (OTD) ...</div>
+        {# ---------------------------------------------------- #}
+        {# HEADER / TOPBAR #}
+        {# ---------------------------------------------------- #}
+        {% include 'components/_topbar_admin.html.twig' %}
+
+        {# ---------------------------------------------------- #}
+        {# CONTENU PRINCIPAL DU DASHBOARD #}
+        {# ---------------------------------------------------- #}
+        <main class="flex-1 p-6">
+            
+            {# Breadcrumbs and Top Actions #}
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
+                    Dashboards <span class="text-blue-500">> Projects</span>
+                </h1>
+                <div class="flex space-x-3">
+                    <button class="px-4 py-2 text-sm font-semibold rounded-lg bg-blue-600 hover:bg-blue-700 text-white shadow-md">
+                        <i class="fas fa-arrow-up mr-2"></i> Plan Upgrade
+                    </button>
+                    <a href="#" class="px-4 py-2 text-sm font-semibold rounded-lg bg-red-600 hover:bg-red-700 text-white shadow-md">
+                        <i class="fas fa-file-export mr-2"></i> Export Report
+                    </a>
+                </div>
             </div>
-            {# Bloc 2 : Alerte Risques #}
-            <div class="col-md-4">
-                <div class="card bg-warning">... Risques Élevés non Assignés ...</div>
+
+            {# GRID PRINCIPALE #}
+            <div class="grid grid-cols-12 gap-6">
+
+                {# COLUMN 1 (ANALYSE DE PROJET) - Colspan 4 #}
+                <div class="col-span-12 lg:col-span-4 space-y-6">
+                    
+                    {# PROJECT ANALYSIS HEADER #}
+                    <div class="p-6 rounded-xl shadow-lg dark:bg-gray-800 bg-cover bg-center" style="background-image: url('placeholder-bg.svg'); background-color: #3f3570;">
+                        <div class="flex items-center text-white mb-4">
+                            <i class="fas fa-bolt text-xl mr-3"></i>
+                            <h2 class="text-xl font-bold">PROJECT ANALYSIS</h2>
+                        </div>
+                        <p class="text-gray-300">Welcome to dashboard, you can manage all your project activities here</p>
+                    </div>
+
+                    {# STATISTIQUES DES PROJETS #}
+                    <div class="grid grid-cols-2 gap-4">
+                        {# Total Projects #}
+                        <div class="p-5 rounded-xl dark:bg-gray-800 shadow-md">
+                            <i class="fas fa-briefcase text-blue-500 mb-2"></i>
+                            <p class="text-gray-400 text-sm">Total Projects</p>
+                            <h3 class="text-3xl font-extrabold text-white">34,876 <span class="text-xs text-green-500 ml-1">10.2%</span></h3>
+                        </div>
+                        {# Completed Projects #}
+                        <div class="p-5 rounded-xl dark:bg-gray-800 shadow-md">
+                            <i class="fas fa-thumbs-up text-pink-500 mb-2"></i>
+                            <p class="text-gray-400 text-sm">Completed</p>
+                            <h3 class="text-3xl font-extrabold text-white">26,231 <span class="text-xs text-red-500 ml-1">5.3%</span></h3>
+                        </div>
+                        {# Pending Projects (Risques) #}
+                        <div class="p-5 rounded-xl dark:bg-gray-800 shadow-md">
+                            <i class="fas fa-clock text-yellow-500 mb-2"></i>
+                            <p class="text-gray-400 text-sm">Pending</p>
+                            <h3 class="text-3xl font-extrabold text-white">8,645 <span class="text-xs text-green-500 ml-1">2.1%</span></h3>
+                        </div>
+                        {# New Projects #}
+                        <div class="p-5 rounded-xl dark:bg-gray-800 shadow-md">
+                            <i class="fas fa-folder-plus text-red-500 mb-2"></i>
+                            <p class="text-gray-400 text-sm">New Projects</p>
+                            <h3 class="text-3xl font-extrabold text-white">3,579 <span class="text-xs text-red-500 ml-1">7.8%</span></h3>
+                        </div>
+                    </div>
+                </div>
+
+                {# COLUMN 2 (GRAPHIQUES et ACTIVITÉ) - Colspan 8 #}
+                <div class="col-span-12 lg:col-span-8 space-y-6">
+
+                    {# PROJECT STATISTICS (GRAPHIQUE LIGNES) - Colspan 8 (dans cette colonne) #}
+                    <div class="grid grid-cols-12 gap-6">
+                        <div class="col-span-12 lg:col-span-7 p-6 rounded-xl dark:bg-gray-800 shadow-lg">
+                            <h2 class="text-lg font-semibold text-white mb-4">PROJECT STATISTICS</h2>
+                            <div class="h-64">
+                                {# EMPLACEMENT DU GRAPHIQUE JS #}
+                                <canvas id="project-stats-chart"></canvas>
+                                {# NOTE: Vous devez ajouter le JS (Chart.js ou autre) dans le block javascript #}
+                            </div>
+                        </div>
+
+                        {# TASK ACTIVITY (GRAPHIQUE DONUT) - Colspan 5 (dans cette colonne) #}
+                        <div class="col-span-12 lg:col-span-5 p-6 rounded-xl dark:bg-gray-800 shadow-lg">
+                            <h2 class="text-lg font-semibold text-white mb-4">TASK ACTIVITY</h2>
+                            <div class="h-40 flex items-center justify-center">
+                                {# EMPLACEMENT DU GRAPHIQUE JS DONUT #}
+                                <canvas id="task-activity-chart"></canvas>
+                            </div>
+                            {# Liste des tâches pour ce bloc #}
+                            <ul class="space-y-2 mt-4 text-sm">
+                                <li class="text-white"><span class="text-blue-400">•</span> On Going Tasks: 1,754</li>
+                                <li class="text-white"><span class="text-purple-400">•</span> Completed Tasks: 634</li>
+                                <li class="text-white"><span class="text-green-400">•</span> To Do Tasks: 878</li>
+                                <li class="text-white"><span class="text-yellow-400">•</span> Pending Tasks: 470</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    {# SECONDARY ROW (TO DO / TASK LIST) #}
+                    <div class="grid grid-cols-12 gap-6">
+                        {# TO DO LIST - Colspan 5 #}
+                        <div class="col-span-12 lg:col-span-5 p-6 rounded-xl dark:bg-gray-800 shadow-lg">
+                            <h2 class="text-lg font-semibold text-white mb-4 flex justify-between items-center">
+                                TO DO LIST
+                                <a href="#" class="text-sm text-blue-400 hover:text-blue-300">View All →</a>
+                            </h2>
+                            {# Exemple de tâche #}
+                            <div class="flex items-center justify-between p-3 dark:bg-gray-700 rounded-lg mt-2">
+                                <span class="text-white">Research Phase Documentation</span>
+                                <i class="fas fa-trash text-red-500 cursor-pointer"></i>
+                            </div>
+                            {# ... autres tâches ... #}
+                        </div>
+                        
+                        {# TASK LIST - Colspan 7 #}
+                        <div class="col-span-12 lg:col-span-7 p-6 rounded-xl dark:bg-gray-800 shadow-lg">
+                            <h2 class="text-lg font-semibold text-white mb-4 flex justify-between items-center">
+                                TASK LIST
+                                <button class="px-3 py-1 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"><i class="fas fa-plus mr-1"></i> Add Task</button>
+                            </h2>
+                            {# Tableau de Tâches à insérer ici (Liste, Assigné, Target, etc.) #}
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            {# Bloc 3 : Capacité #}
-            <div class="col-md-4">
-                <div class="card">... Surcharge des Ressources ...</div>
-            </div>
-        </div>
-        
-        {# Tableau des Projets en Cours #}
-        <h2 class="mt-5">Portefeuille de Projets</h2>
-        {# ... Table des Projets... #}
-        
+        </main>
     </div>
 {% endblock %}

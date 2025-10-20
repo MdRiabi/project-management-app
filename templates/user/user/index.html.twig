@@ -1,0 +1,66 @@
+{# templates/user/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Utilisateurs | Admin{% endblock %}
+
+{% block body %}
+    {% include 'components/_sidebar_admin.html.twig' %}
+
+    <div class="lg:pl-64 flex flex-col">
+        {% include 'components/_topbar_admin.html.twig' %}
+
+        <main class="flex-1 p-6 dark:bg-gray-900 min-h-screen">
+            <h1 class="text-3xl font-bold text-white mb-6">Gestion des Utilisateurs</h1>
+
+            {# Bouton de Création de Compte #}
+            <div class="mb-6 flex justify-between items-center">
+                <a href="{{ path('app_admin_users_new') }}" class="px-4 py-2 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition">
+                    <i class="fas fa-plus mr-2"></i> Créer un Nouvel Utilisateur
+                </a>
+                <span class="text-gray-400">{{ users|length }} Utilisateurs au Total</span>
+            </div>
+
+            {# Tableau des Utilisateurs #}
+            <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-700">
+                    <thead class="bg-gray-700">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Nom Prénom</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Rôle Principal</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Capacité H/Sem</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Actif</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        {% for user in users %}
+                            <tr class="hover:bg-gray-700 transition duration-150">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{{ user.firstName }} {{ user.lastName }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ user.email }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {# Affiche le rôle le plus élevé #}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                        {% if 'ROLE_ADMIN' in user.roles %} bg-red-600 text-white 
+                                        {% elseif 'ROLE_PM' in user.roles %} bg-yellow-600 text-white 
+                                        {% else %} bg-blue-600 text-white {% endif %}">
+                                        {{ user.roles|first|replace({'ROLE_': ''}) }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ user.capacityHours }}h</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                     <i class="fas {% if user.isActive %} fa-check-circle text-green-500 {% else %} fa-times-circle text-red-500 {% endif %}"></i>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <a href="#" class="text-indigo-400 hover:text-indigo-300 mr-3">Éditer</a>
+                                    <a href="#" class="text-red-400 hover:text-red-300">Supprimer</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+{% endblock %}
