@@ -1,19 +1,62 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TekUpFlow{% endblock %}</title>
 
-{# Assurez-vous que le body utilise une classe dark:bg-gray-900 si vous utilisez un mode sombre #}
-{% block body_attributes %}class="bg-gray-100 dark:bg-gray-900"{% endblock %}
+    {# Tailwind CSS #}
+    <script src="https://cdn.tailwindcss.com"></script>
 
-{% block title %}Dashboard | Global Project Analysis{% endblock %}
+    {# Font Awesome Icons #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-{% block body %}
+    {# Google Fonts #}
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body {% block body_attributes %}class="bg-gray-100 dark:bg-gray-900"{% endblock %}>
 
     {# ---------------------------------------------------- #}
     {# SIDEBAR (MENU LATÉRAL) #}
     {# ---------------------------------------------------- #}
-    {% include 'components/_sidebar_admin.html.twig' %} 
+    {% include 'components/_sidebar_admin.html.twig' %}
+
+
 
     <div class="lg:pl-64 flex flex-col">
-        
+        <script>
+            // Toggle sidebar collapsed/expanded without hiding it; keep toggle button visible
+            document.addEventListener('DOMContentLoaded', function () {
+                const toggleBtn = document.getElementById('sidebarToggle');
+                const sidebar = document.getElementById('admin-sidebar');
+                const sidebarTitle = document.getElementById('sidebar-title');
+                if (!toggleBtn || !sidebar) return;
+
+                // Ensure it's not hidden so it can always be expanded back
+                sidebar.classList.remove('hidden', '-translate-x-full');
+                sidebar.classList.add('lg:block');
+
+                const collapsedClass = 'sidebar-collapsed';
+
+                toggleBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    sidebar.classList.toggle(collapsedClass);
+                    if (sidebarTitle) {
+                        // In collapsed state, hide title; show in expanded
+                        if (sidebar.classList.contains(collapsedClass)) {
+                            sidebarTitle.classList.add('hidden');
+                        } else {
+                            sidebarTitle.classList.remove('hidden');
+                        }
+                    }
+                });
+            });
+        </script>
+
         {# ---------------------------------------------------- #}
         {# HEADER / TOPBAR #}
         {# ---------------------------------------------------- #}
@@ -23,28 +66,15 @@
         {# CONTENU PRINCIPAL DU DASHBOARD #}
         {# ---------------------------------------------------- #}
         <main class="flex-1 p-6">
-            
-            {# Breadcrumbs and Top Actions #}
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
-                    Dashboards <span class="text-blue-500">> Projects</span>
-                </h1>
-                <div class="flex space-x-3">
-                    <button class="px-4 py-2 text-sm font-semibold rounded-lg bg-blue-600 hover:bg-blue-700 text-white shadow-md">
-                        <i class="fas fa-arrow-up mr-2"></i> Plan Upgrade
-                    </button>
-                    <a href="#" class="px-4 py-2 text-sm font-semibold rounded-lg bg-red-600 hover:bg-red-700 text-white shadow-md">
-                        <i class="fas fa-file-export mr-2"></i> Export Report
-                    </a>
-                </div>
-            </div>
+
+
 
             {# GRID PRINCIPALE #}
             <div class="grid grid-cols-12 gap-6">
 
                 {# COLUMN 1 (ANALYSE DE PROJET) - Colspan 4 #}
                 <div class="col-span-12 lg:col-span-4 space-y-6">
-                    
+
                     {# PROJECT ANALYSIS HEADER #}
                     <div class="p-6 rounded-xl shadow-lg dark:bg-gray-800 bg-cover bg-center" style="background-image: url('placeholder-bg.svg'); background-color: #3f3570;">
                         <div class="flex items-center text-white mb-4">
@@ -115,33 +145,45 @@
                     </div>
 
                     {# SECONDARY ROW (TO DO / TASK LIST) #}
-                    <div class="grid grid-cols-12 gap-6">
-                        {# TO DO LIST - Colspan 5 #}
-                        <div class="col-span-12 lg:col-span-5 p-6 rounded-xl dark:bg-gray-800 shadow-lg">
-                            <h2 class="text-lg font-semibold text-white mb-4 flex justify-between items-center">
-                                TO DO LIST
-                                <a href="#" class="text-sm text-blue-400 hover:text-blue-300">View All →</a>
-                            </h2>
-                            {# Exemple de tâche #}
-                            <div class="flex items-center justify-between p-3 dark:bg-gray-700 rounded-lg mt-2">
-                                <span class="text-white">Research Phase Documentation</span>
-                                <i class="fas fa-trash text-red-500 cursor-pointer"></i>
-                            </div>
-                            {# ... autres tâches ... #}
-                        </div>
-                        
-                        {# TASK LIST - Colspan 7 #}
-                        <div class="col-span-12 lg:col-span-7 p-6 rounded-xl dark:bg-gray-800 shadow-lg">
-                            <h2 class="text-lg font-semibold text-white mb-4 flex justify-between items-center">
-                                TASK LIST
-                                <button class="px-3 py-1 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"><i class="fas fa-plus mr-1"></i> Add Task</button>
-                            </h2>
-                            {# Tableau de Tâches à insérer ici (Liste, Assigné, Target, etc.) #}
-                        </div>
-                    </div>
+
                 </div>
 
             </div>
         </main>
     </div>
+
+{% block javascripts %}
+    <script>
+        // Counter animation
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target.toLocaleString();
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(start).toLocaleString();
+                }
+            }, 16);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const counters = document.querySelectorAll('.counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.dataset.animated) {
+                        const target = parseInt(entry.target.dataset.target);
+                        animateCounter(entry.target, target);
+                        entry.target.dataset.animated = 'true';
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(counter => observer.observe(counter));
+        });
+    </script>
 {% endblock %}
+</body>
+</html>

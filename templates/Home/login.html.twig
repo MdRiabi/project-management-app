@@ -110,28 +110,11 @@
         </div>
     </section>
 
-    {# SUCCESS POPUP
-    <div id="successPopup" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md mx-4 transform transition-all scale-95">
-            <div class="text-center">
-                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
-                    <i class="fas fa-check text-green-600 text-3xl"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-gray-900 mb-2">Login Successful!</h3>
-                <p class="text-gray-600 mb-6">
-                    You have been successfully logged in. Redirecting to dashboard...
-                </p>
-                <button
-                    onclick="closePopup()"
-                    class="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-lg shadow-lg transition"
-                >
-                    Continue
-                </button>
-            </div>
-        </div>
-    </div> #}
+    
 
 {% endblock %}
+
+{% block footer %}{% endblock %}
 
 {% block javascripts %}
     parent()
@@ -142,7 +125,7 @@
        function togglePasswordVisibility() {
           const passwordInput = document.getElementById('inputPassword');
           const toggleIcon = document.getElementById('toggleIcon');
-     
+
          if (passwordInput && toggleIcon) { // Vérification de sécurité pour éviter les erreurs
              if (passwordInput.type === 'password') {
                  passwordInput.type = 'text';
@@ -155,95 +138,8 @@
                  toggleIcon.classList.add('fa-eye');
              }
          }
-        }     
-        {# const form = document.getElementById('loginForm');
-        const successPopup = document.getElementById('successPopup');
-
-        // Toggle password visibility
-        function togglePasswordVisibility() {
-            const passwordInput = document.getElementById('password');
-            const toggleIcon = document.getElementById('toggleIcon');
-
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
-            }
-        } #}
-
-        {# // Form validation
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // Clear previous errors
-            document.querySelectorAll('.error-message').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('input[type="email"], input[type="password"]').forEach(el => {
-                el.classList.remove('border-red-500');
-            });
-
-            let isValid = true;
-
-            // Validate Email
-            const email = document.getElementById('email');
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!(email instanceof HTMLInputElement) || !email.value.trim() || !emailRegex.test(email.value)) {
-                showError('email', 'emailError');
-                isValid = false;
-            }
-
-            // Validate Password
-            const password = document.getElementById('password');
-            if (!(password instanceof HTMLInputElement) || !password.value.trim()) {
-                showError('password', 'passwordError');
-                isValid = false;
-            }
-
-            // If form is valid, show success popup
-            if (isValid && form instanceof HTMLFormElement) {
-                // Here you would normally send the form data to the server
-                // For now, we'll just show the success popup
-
-                // Simulate sending data (you can replace this with an actual AJAX call)
-                setTimeout(() => {
-                    showSuccessPopup();
-                }, 500);
-            } else if (!isValid) {
-                // Scroll to first error
-                const firstError = document.querySelector('.border-red-500');
-                if (firstError) {
-                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }
-        });
-
-        function showError(inputId, errorId) {
-            document.getElementById(inputId).classList.add('border-red-500');
-            document.getElementById(errorId).classList.remove('hidden');
         }
 
-        function showSuccessPopup() {
-            successPopup.classList.remove('hidden');
-            setTimeout(() => {
-                successPopup.querySelector('.transform').classList.remove('scale-95');
-                successPopup.querySelector('.transform').classList.add('scale-100');
-            }, 10);
-        }
-
-        function closePopup() {
-            successPopup.classList.add('hidden');
-            window.location.href = "{{ path('home') }}"; // Redirect to home page
-        }
-
-        // Close popup when clicking outside
-       successPopup.addEventListener('click', function(e) {
-            if (e.target === successPopup) {
-                closePopup();
-            }
-        }); #}
     </script>
 
 {% endblock %}
