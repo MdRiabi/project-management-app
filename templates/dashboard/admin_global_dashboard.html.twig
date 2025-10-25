@@ -18,7 +18,7 @@
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body {% block body_attributes %}class="bg-gray-100 dark:bg-gray-900"{% endblock %}>
+<body {% block body_attributes %}class="bg-gray-100 dark:bg-gray-900"{% endblock %} data-sidebar-state="expanded">
 
     {# ---------------------------------------------------- #}
     {# SIDEBAR (MENU LATÉRAL) #}
@@ -27,34 +27,60 @@
 
 
 
-    <div class="lg:pl-64 flex flex-col">
+    <div id="layout-wrapper" class="flex flex-col transition-all duration-300">
+        <style>
+            /* Layout responds to a single state on body (expanded|mini) */
+            @media (min-width: 1024px) {
+                body[data-sidebar-state="expanded"] #layout-wrapper { padding-left: 16rem; }
+                body[data-sidebar-state="mini"] #layout-wrapper { padding-left: 4rem; }
+            }
+        </style>
         <script>
-            // Toggle sidebar collapsed/expanded without hiding it; keep toggle button visible
-            document.addEventListener('DOMContentLoaded', function () {
-                const toggleBtn = document.getElementById('sidebarToggle');
-                const sidebar = document.getElementById('admin-sidebar');
-                const sidebarTitle = document.getElementById('sidebar-title');
-                if (!toggleBtn || !sidebar) return;
+            // Single source of truth: body[data-sidebar-state] controls both sidebar and layout
+            (function () {
+                function bindToggle() {
+                    const body = document.body;
+                    const btn = document.getElementById('sidebarToggle');
+                    const sidebar = document.getElementById('admin-sidebar');
+                    const title = document.getElementById('sidebar-title');
+                    if (!btn || !sidebar) return;
 
-                // Ensure it's not hidden so it can always be expanded back
-                sidebar.classList.remove('hidden', '-translate-x-full');
-                sidebar.classList.add('lg:block');
+                    // Ensure sidebar is never hidden/off-canvas
+                    sidebar.classList.remove('hidden', '-translate-x-full');
+                    sidebar.classList.add('lg:block');
 
-                const collapsedClass = 'sidebar-collapsed';
-
-                toggleBtn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    sidebar.classList.toggle(collapsedClass);
-                    if (sidebarTitle) {
-                        // In collapsed state, hide title; show in expanded
-                        if (sidebar.classList.contains(collapsedClass)) {
-                            sidebarTitle.classList.add('hidden');
+                    function syncFromBody() {
+                        const state = body.getAttribute('data-sidebar-state') || 'expanded';
+                        if (state === 'mini') {
+                            sidebar.classList.add('sidebar-mini');
+                            if (title) title.classList.add('hidden');
                         } else {
-                            sidebarTitle.classList.remove('hidden');
+                            sidebar.classList.remove('sidebar-mini');
+                            if (title) title.classList.remove('hidden');
                         }
                     }
-                });
-            });
+
+                    // Initial sync
+                    if (!body.getAttribute('data-sidebar-state')) body.setAttribute('data-sidebar-state', 'expanded');
+                    syncFromBody();
+
+                    if (!btn.dataset.bound) {
+                        btn.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            const current = body.getAttribute('data-sidebar-state') === 'mini' ? 'expanded' : 'mini';
+                            body.setAttribute('data-sidebar-state', current);
+                            syncFromBody();
+                        });
+                        btn.dataset.bound = '1';
+                    }
+                }
+
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', bindToggle);
+                } else {
+                    bindToggle();
+                }
+            })();
         </script>
 
         {# ---------------------------------------------------- #}

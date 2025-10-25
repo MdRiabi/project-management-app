@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% if block('page_title') is defined %}{{ block('page_title') }} | SysAdmin{% else %}SysAdmin{% endif %}{% endblock %}
+
+{% block body %}
+  {# Admin Sidebar #}
+  {% include 'components/_sidebar_admin.html.twig' %}
+
+  {# Right layout wrapper: topbar + page content #}
+  <div id="layout-wrapper" class="flex flex-col transition-all duration-300">
+    <style>
+      /* Layout responds to a single state on body (expanded|mini) */
+      @media (min-width: 1024px) {
+        body[data-sidebar-state="expanded"] #layout-wrapper { padding-left: 16rem; }
+        body[data-sidebar-state="mini"] #layout-wrapper { padding-left: 4rem; }
+      }
+    </style>
+
+    {% include 'components/_topbar_admin.html.twig' %}
+
+    <main class="flex-1 min-h-screen dark:bg-gray-900 p-6">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  <script>
+    // Single source of truth: body[data-sidebar-state] controls both sidebar and layout
+    (function () {
+      function bindToggle() {
+        const body = document.body;
+        const btn = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('admin-sidebar');
+        const title = document.getElementById('sidebar-title');
+        if (!btn || !sidebar) return;
+
+        // Ensure sidebar is never hidden/off-canvas
+        sidebar.classList.remove('hidden', '-translate-x-full');
+        sidebar.classList.add('lg:block');
+
+        function syncFromBody() {
+          const state = body.getAttribute('data-sidebar-state') || 'expanded';
+          if (state === 'mini') {
+            sidebar.classList.add('sidebar-mini');
+            if (title) title.classList.add('hidden');
+          } else {
+            sidebar.classList.remove('sidebar-mini');
+            if (title) title.classList.remove('hidden');
+          }
+        }
+
+        if (!body.getAttribute('data-sidebar-state')) body.setAttribute('data-sidebar-state', 'expanded');
+        syncFromBody();
+
+        if (!btn.dataset.bound) {
+          btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const current = body.getAttribute('data-sidebar-state') === 'mini' ? 'expanded' : 'mini';
+            body.setAttribute('data-sidebar-state', current);
+            syncFromBody();
+          });
+          btn.dataset.bound = '1';
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bindToggle);
+      } else {
+        bindToggle();
+      }
+    })();
+  </script>
+{% endblock %}

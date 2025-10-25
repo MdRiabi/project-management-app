@@ -28,4 +28,7 @@ class HomeController extends AbstractController
     {
         return $this->render('home/request_account.html.twig');
     }
+
+    
 }
+

@@ -1,0 +1,112 @@
+{% extends 'sysadmin/layout/base_sysadmin.html.twig' %}
+
+{% block page_title %}Users{% endblock %}
+
+{% block content %}
+  <div class="max-w-7xl mx-auto">
+    <!-- Page header -->
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-end space-x-3">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-white">Users</h1>
+        <span class="text-gray-400 text-xl">( {{ users|length|default(0) }} )</span>
+      </div>
+      <a href="{{ path('sysadmin_user_new')|default('#') }}"
+         class="inline-flex items-center px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg">
+        <i class="fas fa-user-plus mr-2"></i>
+        Add new user
+      </a>
+    </div>
+
+    <!-- Filters + Search -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+      
+      <div class="flex items-center space-x-2">
+        <div class="relative">
+          <input type="search"
+                 placeholder="Search users"
+                 class="w-64 pl-10 pr-4 py-2 rounded-lg border-2 border-gray-700 bg-gray-800 text-gray-200 placeholder-gray-400 focus:outline-none focus:border-blue-500">
+          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Users table -->
+    <div class="bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+      <table class="min-w-full divide-y divide-gray-700">
+        <thead class="bg-gray-750">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">User</th>
+            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Email</th>
+            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Role</th>
+            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Teams</th>
+            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Capacity</th>
+            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">Status</th>
+            <th class="px-6 py-3 text-right text-xs font-semibold text-gray-300 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-700">
+        {% for user in users|default([]) %}
+          <tr class="hover:bg-gray-700/60 transition">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="flex items-center space-x-3">
+                <img src="{{ user.avatarUrl|default('/assets/images/default-avatar.png') }}"
+                     class="h-9 w-9 rounded-full ring-2 ring-gray-700" alt="">
+                <div>
+                  <div class="text-white font-semibold">{{ user.firstName }} {{ user.lastName }}</div>
+                  <div class="text-xs text-gray-400">#{{ user.id|default('—') }}</div>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-300">{{ user.email }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              {% set role = (user.roles|default([]) | first)|default('ROLE_USER') %}
+              {% set roleName = role|replace({'ROLE_':''})|lower|title %}
+              <span class="px-2.5 py-1 text-xs rounded-full
+                {% if 'ROLE_ADMIN' in user.roles %} bg-red-600 text-white
+                {% elseif 'ROLE_PM' in user.roles %} bg-yellow-600 text-white
+                {% elseif 'ROLE_MANAGER' in user.roles %} bg-purple-600 text-white
+                {% else %} bg-blue-600 text-white {% endif %}">
+                {{ roleName }}
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="flex -space-x-2">
+                {% for i in 0..(user.teamsCount|default(0) > 3 ? 2 : user.teamsCount|default(0)-1) %}
+                  <img src="/assets/images/team-{{ i+1 }}.jpg" class="h-7 w-7 rounded-full ring-2 ring-gray-800" alt="">
+                {% endfor %}
+                {% if user.teamsCount|default(0) > 3 %}
+                  <span class="h-7 w-7 rounded-full bg-gray-700 text-gray-200 text-xs flex items-center justify-center ring-2 ring-gray-800">+{{ user.teamsCount - 3 }}</span>
+                {% endif %}
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-gray-300">{{ user.capacityHours|default('—') }} h/week</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2.5 py-1 text-xs rounded-full
+                {% if user.isActive %} bg-green-600 text-white
+                {% else %} bg-gray-600 text-white {% endif %}">
+                {% if user.isActive %} ACTIVE {% else %} INACTIVE {% endif %}
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+              <a href="{{ path('sysadmin_user_edit', {id: user.id})|default('#') }}"
+                 class="text-indigo-400 hover:text-indigo-300 mr-3">
+                Edit
+              </a>
+              <a href="{{ path('sysadmin_user_delete', {id: user.id})|default('#') }}"
+                 class="text-red-400 hover:text-red-300">
+                Delete
+              </a>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="7" class="px-6 py-10 text-center text-gray-400">
+              No users found.
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
