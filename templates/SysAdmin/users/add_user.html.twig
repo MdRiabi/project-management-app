@@ -1,0 +1,98 @@
+Bien sûr, voici un exemple de code pour créer un formulaire de création d'utilisateur avec les champs que vous avez mentionnés :
+
+```twig
+<form method="post" action="{{ path('app_add_user') }}">
+    {% for error in form.errors %}
+        <div class="bg-red-500 text-white p-3 rounded-lg mb-4 text-sm" role="alert">
+            {{ error.messageKey|trans(error.arguments, 'security') }}
+        </div>
+    {% endfor %}
+
+    <h2 class="text-2xl font-bold text-gray-700 mb-6 text-center">Request an Account</h2>
+
+    {{ form_start(form) }}
+
+    <div class="space-y-6">
+        {# First Name #}
+        <div>
+            <label for="firstName" class="block text-sm font-semibold text-gray-700 mb-2">
+                First Name <span class="text-red-500">*</span>
+            </label>
+            {{ form_row(form.firstName, { 'attr': { 'id': 'firstName', 'required': 'required' } }) }}
+            <p class="text-red-500 text-sm mt-1 hidden error-message" id="firstNameError">First name is required</p>
+        </div>
+
+        {# Last Name #}
+        <div>
+            <label for="lastName" class="block text-sm font-semibold text-gray-700 mb-2">
+                Last Name <span class="text-red-500">*</span>
+            </label>
+            {{ form_row(form.lastName, { 'attr': { 'id': 'lastName', 'required': 'required' } }) }}
+            <p class="text-red-500 text-sm mt-1 hidden error-message" id="lastNameError">Last name is required</p>
+        </div>
+
+        {# Email #}
+        <div>
+            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
+                Email <span class="text-red-500">*</span>
+            </label>
+            {{ form_row(form.email, { 'attr': { 'id': 'email', 'required': 'required' } }) }}
+            <p class="text-red-500 text-sm mt-1 hidden error-message" id="emailError">Please enter a valid email address</p>
+        </div>
+
+        {# Address #}
+        <div>
+            <label for="address" class="block text-sm font-semibold text-gray-700 mb-2">
+                Address
+            </label>
+            {{ form_row(form.address, { 'attr': { 'id': 'address' } }) }}
+        </div>
+
+        {# Job Title #}
+        <div>
+            <label for="jobTitle" class="block text-sm font-semibold text-gray-700 mb-2">
+                Job Title
+            </label>
+            {{ form_row(form.jobTitle, { 'attr': { 'id': 'jobTitle' } }) }}
+        </div>
+
+        {# Department #}
+        <div>
+            <label for="department" class="block text-sm font-semibold text-gray-700 mb-2">
+                Department
+            </label>
+            {{ form_row(form.department, { 'attr': { 'id': 'department' } }) }}
+        </div>
+
+        {# Team #}
+        <div>
+            <label for="team" class="block text-sm font-semibold text-gray-700 mb-2">
+                Team
+            </label>
+            {{ form_row(form.team, { 'attr': { 'id': 'team' } }) }}
+        </div>
+
+        {# Message #}
+        <div>
+            <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">
+                Message
+            </label>
+            {{ form_row(form.message, { 'attr': { 'id': 'message' } }) }}
+        </div>
+
+        {# Password #}
+        <div>
+            <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">
+                Password <span class="text-red-500">*</span>
+            </label>
+            {{ form_row(form.password, { 'attr': { 'id': 'password', 'required': 'required' } }) }}
+            <p class="text-red-500 text-sm mt-1 hidden error-message" id="passwordError">Password is required</p>
+        </div>
+
+        {# Confirm Password #}
+        <div>
+            <label for="confirmPassword" class="block text-sm font-semibold text-gray-700 mb-2">
+                Confirm Password <span class="text-red-500">*</span>
+            </label>
+            {{ form_row(form.confirmPassword, { 'attr': { 'id': 'confirmPassword', 'required': 'required' } }) }}
+            <p class="text-red-500 text-sm mt-1 hidden error-message" id="confirmPasswordError">Passwords

@@ -3,3 +3,10 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+# config/routes.yaml
+
+app_admin_users_new:
+    path: /admin/users/new
+    controller: App\Controller\User\AdminController::new
+    defaults:
+        _route: 'app_admin_users_new'
