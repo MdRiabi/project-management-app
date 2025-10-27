@@ -69,6 +69,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeInterface $last_login = null;
 
+    #[ORM\Column(type: 'date', nullable: true)]
+    private ?\DateTimeInterface $date_of_birth = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $address = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $message = null;
+
+    #[ORM\Column(type: 'json', nullable: true)]
+    private array $skills = [];
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $creation_date = null;
+
     // --- Relation Manager (Inversée) ---
     // On ajoute une propriété pour pouvoir faire la liaison depuis le Manager vers ses employés
     #[ORM\OneToMany(mappedBy: 'manager', targetEntity: self::class)]
@@ -267,6 +282,61 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastLogin(?\DateTimeInterface $last_login): static
     {
         $this->last_login = $last_login;
+        return $this;
+    }
+
+    public function getDateOfBirth(): ?\DateTimeInterface
+    {
+        return $this->date_of_birth;
+    }
+
+    public function setDateOfBirth(?\DateTimeInterface $date_of_birth): static
+    {
+        $this->date_of_birth = $date_of_birth;
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): static
+    {
+        $this->address = $address;
+        return $this;
+    }
+
+    public function getMessage(): ?string
+    {
+        return $this->message;
+    }
+
+    public function setMessage(?string $message): static
+    {
+        $this->message = $message;
+        return $this;
+    }
+
+    public function getSkills(): array
+    {
+        return $this->skills;
+    }
+
+    public function setSkills(array $skills): static
+    {
+        $this->skills = $skills;
+        return $this;
+    }
+
+    public function getCreationDate(): ?\DateTimeInterface
+    {
+        return $this->creation_date;
+    }
+
+    public function setCreationDate(?\DateTimeInterface $creation_date): static
+    {
+        $this->creation_date = $creation_date;
         return $this;
     }
 
