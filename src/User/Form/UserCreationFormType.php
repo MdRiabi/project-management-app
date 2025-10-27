@@ -38,20 +38,20 @@ class UserCreationFormType extends AbstractType
             // 1. Identification (Champs Simples)
             // ----------------------------------------
             ->add('firstName', TextType::class, [
-                'label' => 'Prénom',
+                'label' => 'First Name',
                 'required' => true,
             ])
             ->add('lastName', TextType::class, [
-                'label' => 'Nom',
+                'label' => 'Last Name',
                 'required' => true,
             ])
             ->add('dateOfBirth', DateType::class, [
-                'label' => 'Date de Naissance',
+                'label' => 'Date Of Birth',
                 'required' => true,
                 'widget' => 'single_text',
             ])
             ->add('address', TextType::class, [
-                'label' => 'Adresse',
+                'label' => 'Address',
                 'required' => true,
             ])
             ->add('email', EmailType::class, [
@@ -59,7 +59,7 @@ class UserCreationFormType extends AbstractType
                 'required' => true,
             ])
             ->add('password', PasswordType::class, [
-                'label' => 'Mot de Passe',
+                'label' => 'Password',
                 'required' => true,
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
@@ -69,7 +69,7 @@ class UserCreationFormType extends AbstractType
                 ],
             ])
             ->add('employeeId', TextType::class, [
-                'label' => 'Numéro d\'Employé',
+                'label' => 'Employee ID',
                 'required' => true,
             ])
 
@@ -77,7 +77,7 @@ class UserCreationFormType extends AbstractType
             // 2. Rôles et Ressources
             // ----------------------------------------
             ->add('jobTitle', FormChoiceType::class, [
-                'label' => 'Titre du Poste',
+                'label' => 'Job Title',
                 'required' => true,
                 'choices' => [
                     'Développeur' => 'developer',
@@ -88,7 +88,7 @@ class UserCreationFormType extends AbstractType
                 ],
             ])
             ->add('department', FormChoiceType::class, [
-                'label' => 'Département',
+                'label' => 'Department',
                 'required' => true,
                 'choices' => [
                     'IT' => 'it',
@@ -99,7 +99,7 @@ class UserCreationFormType extends AbstractType
                 ],
             ])
             ->add('team', FormChoiceType::class, [
-                'label' => 'Équipe',
+                'label' => 'Team',
                 'required' => true,
                 'choices' => [
                     'Équipe A' => 'team_a',
@@ -108,21 +108,21 @@ class UserCreationFormType extends AbstractType
                 ],
             ])
             ->add('roles', ChoiceType::class, [
-                'label' => 'Rôle',
+                'label' => 'Role',
                 'required' => true,
                 'choices' => $roles,
                 'multiple' => true,
                 'expanded' => true,
             ])
             ->add('capacityHours', NumberType::class, [
-                'label' => 'Capacité Hebdomadaire (en Heures)',
+                'label' => 'Weekly Capacity (in Hours)',
                 'required' => true,
                 'scale' => 2,
                 'html5' => true,
                 'attr' => ['min' => 0, 'max' => 40],
             ])
             ->add('skills', FormChoiceType::class, [
-                'label' => 'Compétences',
+                'label' => 'Skills',
                 'required' => true,
                 'choices' => [
                     'PHP' => 'php',
@@ -144,7 +144,7 @@ class UserCreationFormType extends AbstractType
                 'placeholder' => 'Sélectionner un manager',
             ])
             ->add('isActive', CheckboxType::class, [
-                'label' => 'Actif',
+                'label' => 'Activ',
                 'required' => false,
             ])
 
@@ -152,7 +152,7 @@ class UserCreationFormType extends AbstractType
             // 3. Fichiers et Messages
             // ----------------------------------------
             ->add('profilePicture', FileType::class, [
-                'label' => 'Photo de Profil',
+                'label' => 'Profile Picture',
                 'required' => true,
                 'mapped' => false,
             ])
@@ -161,7 +161,7 @@ class UserCreationFormType extends AbstractType
                 'required' => true,
             ])
             ->add('creationDate', DateType::class, [
-                'label' => 'Date de Création',
+                'label' => 'Creation Date',
                 'required' => true,
                 'widget' => 'single_text',
                 'data' => new \DateTime(),
